@@ -12,8 +12,8 @@
 </head>
 <body>
     <div class="container">
-        <div class="d-flex justify-content-center">
-            <h3 class="bg-dark text-white">Mini Blog Project</h3>
+        <div class="d-flex justify-content-center m-3">
+            <h3 class="bg-dark text-white p-3">Mini Blog Project</h3>
 
         </div>
 
