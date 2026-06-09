@@ -12,16 +12,28 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="my-2">
-                                <input type="text" name="title" class="form-control w-100" placeholder="Enter Blog Title...">
+                                <input type="text" name="title" value="{{ old('title')}}" class="form-control w-100 @error ('title') is-invalid @enderror" placeholder="Enter Blog Title..." >
+                                @error('title')
+                                    <div class="invalid-message text-danger">{{$message}}</div>
+                                @enderror
                             </div>
                              <div class="my-2">
-                                <textarea name="" id="" cols="30" rows="10" placeholder="Enter Message..." class="form-control w-100"></textarea>
+                                <textarea name="description" id="" cols="30" rows="10" placeholder="Enter Message..." class="form-control w-100 @error ('description') is-invalid @enderror" >{{ old('description')}}</textarea>
+                                @error('description')
+                                    <div class="invalid-message text-danger">{{$message}}</div>
+                                @enderror
                             </div>
                              <div class="my-2">
-                                <input type="file" name="image" class="form-control w-100" placeholder="">
+                                <input type="file" name="image" value="{{ old('image')}}" class="form-control w-100 @error ('image') is-invalid @enderror" placeholder="" >
+                                @error('image')
+                                    <div class="invalid-message text-danger">{{$message}}</div>
+                                @enderror
                             </div>
                             <div class="my-2">
-                                <input type="text" name="ownerName" class="form-control w-100" placeholder="Enter Owner Name...">
+                                <input type="text" name="ownerName" value="{{ old('ownerName')}}" class="form-control w-100 @error ('ownerName') is-invalid @enderror" placeholder="Enter Owner Name...">
+                                @error('ownerName')
+                                    <div class="invalid-message text-danger">{{$message}}</div>
+                                @enderror
                             </div>
                             <div class="my-2">
                                 <input type="submit" value="Create" class="btn bg-dark text-whtie shadow-sm rounded">
