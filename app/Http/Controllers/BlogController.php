@@ -9,7 +9,12 @@ class BlogController extends Controller
 {
     //direct blog list page
     public function list(){
-        return view('blog.list');//create view of the home page
+
+        $blogs = Blog::select('id', 'title', 'description', 'image', 'owner_name', 'created_at') //getting data from database
+                    ->orderby('created_at', 'desc')
+                    ->paginate(4);
+
+        return view('blog.list', compact('blogs'));//create view of the home page
     }
 
     //create blog

@@ -6,7 +6,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-4">
+            <div class="col-5">
 
                 @if(Session::has('success'))
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -53,13 +53,20 @@
             </div>
             <div class="col">
 
+                @foreach ($blogs as $item)
+                {{-- showing data from database --}}
                 <div class="card my-2 shadow-sm ">
                     <div class="card-body">
-                        <div class="d-flex justify-content-around">
-                            <div class="">
-                                Hello World
+                        <div class="row">
+                            <div class="col-2">
+                                <img class="img-thumbnail" src="{{asset('blogImages/'.$item->image )}}" alt="">
                             </div>
-                            <div class="">
+                            <div class="col-8">
+                                <div class="">{{ $item->title}}</div>
+                                <p class="text-muted">{{$item->description}}</p>
+                                <p>Written by - {{ $item->owner_name}}</p>
+                            </div>
+                            <div class="col">
                                 <button class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></button>
                                 <button class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
                             </div>
@@ -67,33 +74,11 @@
                     </div>
                 </div>
 
-                <div class="card my-2 shadow-sm ">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-around">
-                            <div class="">
-                                Hello World
-                            </div>
-                            <div class="">
-                                <button class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
 
-                <div class="card my-2 shadow-sm ">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-around">
-                            <div class="">
-                                Hello World
-                            </div>
-                            <div class="">
-                                <button class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <span>{{$blogs->links()}}</span>
+
+
 
             </div>
         </div>
