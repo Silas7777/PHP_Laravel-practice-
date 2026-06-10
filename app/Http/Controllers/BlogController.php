@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -16,7 +17,29 @@ class BlogController extends Controller
         // dd($request->all()); //view all data from form
         $this->checkValidation($request); //call validate function
 
-        return "Successful";
+        // return "Successful";
+
+        $data = $this->getBlogData($request); //title, description, ownername
+
+        if($request->hasFile('image')){
+            $fileName = uniqid() . $request->file('image')->getClientOriginalName(); //getting image file original name
+            $request->file('image')->move( public_path() . '/blogImages/' , $fileName);
+
+            $data['image'] = $fileName;
+        }
+
+        Blog::create($data);
+
+        return back()->with(['success' => 'Blog created successfully...']);
+    }
+
+    //request blog data
+    private function getBlogData($request){
+        return [
+            'title' => $request->title ,
+            'description' => $request->description,
+            'owner_name' => $request->ownerName ,
+        ];
     }
 
     //form validation check
