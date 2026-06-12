@@ -57,7 +57,7 @@ class BlogController extends Controller
         Blog::where('id',$id)->delete(); //delete the whole blog
 
 
-        alert()->success('Successful!', 'Blog deleted successfully...'); //show message
+        // alert()->success('Successful!', 'Blog deleted successfully...'); //show message
 
 
         return back();//back to page
