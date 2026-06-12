@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use RealRashid\SweetAlert\Facades\Alert;
+
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -28,14 +30,38 @@ class BlogController extends Controller
 
         if($request->hasFile('image')){
             $fileName = uniqid() . $request->file('image')->getClientOriginalName(); //getting image file original name
-            $request->file('image')->move( public_path() . '/blogImages/' , $fileName);
+            $request->file('image')->move( public_path() . '/blogImages/' , $fileName);//creating file path and store files
 
             $data['image'] = $fileName;
         }
 
         Blog::create($data);
 
-        return back()->with(['success' => 'Blog created successfully...']);
+        alert()->success('Successful!', 'Blog created successfully...'); //show message
+
+
+
+        return back(); //back to page
+    }
+
+    //delete blog
+    public function delete($id){
+
+        $oldImage = Blog::where('id', $id)->value('image'); //find image id with delete id
+
+        //check if image exist or not
+        if(file_exists(public_path('blogImages/'. $oldImage))){
+            unlink(public_path('blogImages/'. $oldImage)); //if exist oldimage, unlink the oldimage and delete
+        }
+
+        Blog::where('id',$id)->delete(); //delete the whole blog
+
+
+        alert()->success('Successful!', 'Blog deleted successfully...'); //show message
+
+
+        return back();//back to page
+
     }
 
     //request blog data

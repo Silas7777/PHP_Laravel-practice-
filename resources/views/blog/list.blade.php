@@ -68,7 +68,8 @@
                             </div>
                             <div class="col">
                                 <button class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
+
+                                <a href="{{ route('blog#delete', $item->id) }}"> <button class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-trash"></i></button></a>
                             </div>
                         </div>
                     </div>

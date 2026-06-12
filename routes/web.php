@@ -9,4 +9,5 @@ Route::group(['prefix' => 'blog'], function(){
 
     Route::get('list',[BlogController::class,'list'])->name('blog#list');//create route for home page
     Route::post('create',[BlogController::class,'create'])->name('blog#create');//create route for taking data from form
+    Route::get('delete/{id}', [BlogController::class, 'delete'])->name('blog#delete'); //create route for deleting items
 });
