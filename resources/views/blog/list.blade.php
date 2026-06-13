@@ -58,6 +58,14 @@
             </div>
             <div class="col">
 
+                <div class="col-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Input group example" aria-label="Input group example" aria-describedby="btnGroupAddon2">
+                        <div class="input-group-text" id="btnGroupAddon2"><i class="fa-solid fa-magnifying-glass"></i></div>
+
+                    </div>
+                </div>
+
                 @foreach ($blogs as $item)
                     {{-- showing data from database --}}
                     <div class="card my-2 shadow-sm ">
@@ -71,10 +79,11 @@
                                     <div class="">{{ $item->title }}</div>
                                     <p class="text-muted">{{ $item->description }}</p>
                                     <p>Written by - {{ $item->owner_name }}</p>
+                                    <p>{{ $item->created_at->format("j-F-Y")}}</p>
                                 </div>
                                 <div class="col">
-                                    <button class="btn btn-outline-primary btn-sm"><i
-                                            class="fa-solid fa-pen-to-square"></i></button>
+                                    <a href="{{ route('blog#edit',$item->id)}}"><button class="btn btn-outline-primary btn-sm"><i
+                                            class="fa-solid fa-pen-to-square"></i></button></a>
 
                                  <button type="button" class="btn btn-outline-danger btn-sm" onclick="confrimDelete({{ $item->id}})"><i class="fa-solid fa-trash"></i></button>
                                 </div>

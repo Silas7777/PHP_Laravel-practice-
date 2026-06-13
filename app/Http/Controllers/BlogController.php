@@ -22,7 +22,7 @@ class BlogController extends Controller
     //create blog
     public function create(Request $request){
         // dd($request->all()); //view all data from form
-        $this->checkValidation($request); //call validate function
+        $this->checkValidation($request,'create'); //call validate function
 
         // return "Successful";
 
@@ -64,6 +64,45 @@ class BlogController extends Controller
 
     }
 
+
+    //edit blog
+    public function edit($id){
+        $blog = Blog::where('id', $id)->first();
+
+        return view('blog.edit',compact('blog'));
+
+    }
+
+    //update blog
+    public function update(Request $request, $id){
+
+        $request['id'] = $id;
+        $this->checkValidation($request,'update');
+
+        $data = $this->getBlogData($request);
+
+         if($request->hasFile('image')){
+
+         $oldImage = $request->oldImage; //old image name
+
+          if(file_exists(public_path('blogImages/'. $oldImage))){
+            unlink(public_path('blogImages/'. $oldImage)); //if exist oldimage, unlink the oldimage and delete
+        }
+
+            $fileName = uniqid() . $request->file('image')->getClientOriginalName(); //getting image file original name
+            $request->file('image')->move( public_path() . '/blogImages/' , $fileName);//creating file path and store files
+
+            $data['image'] = $fileName;
+        }
+
+        Blog::where('id',$id)->update($data); //update in database
+
+        alert()->success('Successful!', 'Blog updated successfully...'); //show message
+
+        return to_route('blog#list'); //back to list page
+
+    }
+
     //request blog data
     private function getBlogData($request){
         return [
@@ -74,14 +113,16 @@ class BlogController extends Controller
     }
 
     //form validation check
-    private function checkValidation($request){
+    private function checkValidation($request,$action){
 
     $rule=[
-        'title'=>'required|min:5|max:199',
+        'title'=>'required|min:5|max:199|unique:blogs,title,'.$request->id, //title must be unique expect itself for update
         'description'=>'required|min:5',
-        'image'=>'required|file|mimes:jpg,jpeg,png,webp,svg,gif',
         'ownerName'=>'min:5|max:49'
     ];
+
+
+    $rule['image']= $action == 'create' ? 'required|file|mimes:jpg,jpeg,png,webp,svg,gif' : 'file|mimes:jpg,jpeg,png,webp,svg,gif';
 
     $message=[
         'title.required'=> 'Title cannot be empty',
