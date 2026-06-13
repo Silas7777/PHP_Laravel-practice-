@@ -58,13 +58,18 @@
             </div>
             <div class="col">
 
-                <div class="col-4">
+                <form action="{{ route('blog#list')}}" method="">
+                    @csrf
+                    <div class="col-4 offset-8">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Input group example" aria-label="Input group example" aria-describedby="btnGroupAddon2">
-                        <div class="input-group-text" id="btnGroupAddon2"><i class="fa-solid fa-magnifying-glass"></i></div>
+                        <input type="text" name="searchKey" value="{{ request('searchKey')}}" class="form-control" placeholder="Enter Search Title..." aria-label="Input group example" aria-describedby="btnGroupAddon2">
+                        <button type="submit" class="btn btn-outline-secondary input-group-text"><i class="fa-solid fa-magnifying-glass"></i></button>
 
                     </div>
                 </div>
+                </form>
+
+                @if(count($blogs) != 0)
 
                 @foreach ($blogs as $item)
                     {{-- showing data from database --}}
@@ -91,6 +96,9 @@
                         </div>
                     </div>
                 @endforeach
+                    @else
+                    <h3 class="text-muted text-center">There is no data....</h3>
+                @endif
 
                 <span>{{ $blogs->links() }}</span>
 

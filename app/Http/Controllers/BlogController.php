@@ -13,6 +13,14 @@ class BlogController extends Controller
     public function list(){
 
         $blogs = Blog::select('id', 'title', 'description', 'image', 'owner_name', 'created_at') //getting data from database
+                    ->when( request('searchKey'), function($query){
+                        // $query->orWhere('title','like', '%'. request('searchKey').'%'); //show output as search key input
+                        // $query->orWhere('description','like', '%'. request('searchKey').'%'); //show output as search key input
+                        // $query->orWhere('owner_name','like', '%'. request('searchKey').'%'); //show output as search key input
+
+                        $query->whereAny(['title','description','owner_name'],'like','%'. request('searchKey').'%');
+
+                    })
                     ->orderby('created_at', 'desc')
                     ->paginate(4);
 
